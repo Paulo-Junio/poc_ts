@@ -1,11 +1,8 @@
-import pkg from 'pg';
+import pkg from '@prisma/client';
 
 
-const { Pool } = pkg;
+const { PrismaClient } = pkg;
 
-const connection = new Pool({
-  connectionString: "postgres://paulo:iJrPeJI7ZIA898lJkAjhsUEX2Zqx5GHH@dpg-cf6skupa6gdjkk5bnd50-a.oregon-postgres.render.com/pocts",
-  ssl: true,
-});
+const prisma = new PrismaClient();
 
-export default connection;
+export default prisma;

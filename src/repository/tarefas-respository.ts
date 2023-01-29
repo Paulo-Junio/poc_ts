@@ -1,38 +1,77 @@
 import {QueryResult } from 'pg';
-import { Request, Response } from 'express';
-import connection from "../database/db.js";
+import prisma from "../database/db.js";
+import { to_do } from '@prisma/client';
 
-type ListaTarefa = {
+type ListaTarefa= {
     id: number,
     name: string,
     description: string,
-    responsible: string,
-    date: string | Date,
-    status: string
+    responsibleId: number,
+    date: string,
+    statusId:number
+};
+
+type TarefaInput = Omit<to_do, "id" | "createAt">
+
+const getTarefas = async () => {
+    const listaDeTarefas = await prisma.to_do.findMany({
+        select: {
+            id: true,
+            name: true,
+            description:true,
+        responsible_to_do_resposibleIdToresponsible :{
+                select:{
+                    name:true
+                }
+            },
+        responsible_to_do_statusIdToresponsible: {
+            select: {
+                statusName:true
+            }
+        }
+        }
+    });
+
+    return listaDeTarefas;
 }
 
-type Tarefa = Omit<ListaTarefa, "id">
-
-const getTarefas = async (): Promise < QueryResult <ListaTarefa>> => {
-    const ListaDeTarefas = await connection.query(`SELECT * FROM to_do;`);
-    return ListaDeTarefas;
+async function postTarefas(tarefa: TarefaInput):Promise<void> {
+    await prisma.to_do.create({
+        data: tarefa
+    });
 }
 
-const postTarefas = async (tarefa:Tarefa): Promise < QueryResult<Response>> => {
-    return await connection.query(`INSERT INTO to_do(name, description, responsible, date, status) VALUES($1, $2, $3,$4,$5);`,[tarefa.name, tarefa.description, tarefa.responsible, tarefa.date, tarefa.status])
+const updateTarefas = async (tarefa: TarefaInput, id:number):Promise<void>  => {
+    await prisma.to_do.update({
+      where:{ id },
+      data:tarefa
+    });
 }
 
-const updateTarefas = async (tarefa: Tarefa, id:number): Promise < QueryResult<Response>> => {
-    return  await connection.query('UPDATE to_do SET status=$1 WHERE id=$2;',[tarefa.status, id]);
+const deleteTarefas = async (id : number):Promise<void>  => {
+    await prisma.to_do.delete({where: {id}});
 }
 
-const deleteTarefas = async (id : number): Promise < QueryResult<Response>> => {
-    return await connection.query(`DELETE FROM to_do WHERE id=$1;`, [id])
-}
-
-const getContarTarefa= async(responsible:string): Promise < QueryResult<Response>> => {
-    const contarPorUser = await connection.query(`SELECT * FROM to_do WHERE responsible = $1;`, [responsible]);
-    return contarPorUser;
+const getContarTarefa= async(resposibleId:number) => {
+    const responsibleList = prisma.to_do.findMany({
+        where:{resposibleId},
+        select: {
+            id: true,
+            name: true,
+            description:true,
+        responsible_to_do_resposibleIdToresponsible :{
+                select:{
+                    name:true
+                }
+            },
+        responsible_to_do_statusIdToresponsible: {
+            select: {
+                statusName:true
+            }
+        }
+        }
+    })
+    return responsibleList;
 };
 
 const tarefaRepository = {

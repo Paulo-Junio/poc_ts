@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import connection from "../database/db.js";
-import { tarefaSchema } from "../models/tarefasSchema.js";
+import prisma from "../database/db.js";
+import { tarefaSchema } from "../models/tarefas-schema.js";
 
 type Tarefa = {
     name: string,
@@ -16,8 +16,7 @@ export const tarefasValidation = (req: Request, res: Response, next: NextFunctio
     const {error} = tarefaSchema.validate(tarefa,{abortEarly: false});
 
     if (error) {
-        console.log(error)
-        return res.sendStatus(400);
+        return res.status(400).send(error.message);
     }
     res.locals.tarefa = tarefa;
     next();
@@ -25,23 +24,30 @@ export const tarefasValidation = (req: Request, res: Response, next: NextFunctio
 
 export const tarefaUpdateDeleteValidation = async (req: Request, res: Response, next:NextFunction) => {
     try{
-        const id = req.params.id;
-        const tarefaExist = await connection.query(`SELECT * FROM to_do WHERE id=$1;`, [Number(id)]);
-        if(tarefaExist.rows){
-            return res.sendStatus(400)
+        const id = Number(req.params.id);
+        const tarefaExist = await prisma.to_do.findFirst({
+            where: {id}
+        });
+
+        if(!tarefaExist){
+            return res.status(404).send("A tarefa não existe.")
         }
-        next()
+        
     } catch(err){
-        res.sendStatus(500) 
+        console.log(err)
+        return res.status(404).send("A tarefa selecionada não existe")
     }
+    next()
 };
 
 export const usuarioValidation = async (req: Request, res: Response, next:NextFunction) => {
     try{
-        const usuario = req.params.usuario;
-        const usuarioExist = await connection.query(`SELECT * FROM to_do WHERE responsible=$1;`, [usuario]);
-        if(!usuarioExist.rows[0]){
-            return res.sendStatus(400)
+        const id = Number(req.params.id);
+        const usuarioExist = await prisma.responsible.findUnique({
+            where: {id}
+        });
+        if(!usuarioExist){
+            return res.status(400).send("O usuário não existe")
         }
         next()
     } catch(err){

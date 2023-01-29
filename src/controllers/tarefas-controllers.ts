@@ -1,20 +1,11 @@
 import { Request, Response } from "express";
 import tarefaRepository from "../repository/tarefas-respository.js";
-import connection from "../database/db.js";
-
-type Tarefa = {
-    name: string,
-    description: string,
-    responsible: string,
-    date: string | Date,
-    status: string
-}
 
 
 export const getTarefas= async (req:Request ,res: Response)=>{
     try{
         const listaDeTarefas = await tarefaRepository.getTarefas();
-        return res.status(200).send(listaDeTarefas.rows)
+        return res.status(200).send(listaDeTarefas)
 
     } catch(err){
         res.sendStatus(500)
@@ -56,10 +47,11 @@ export const deleteTarefas = async (req:Request , res: Response) => {
 export const getCountByUser = async (req:Request , res: Response) => {
     try{
         const usuario = req.params.usuario;
-        const contarTarefas= await tarefaRepository.getContarTarefa(usuario);
-        return res.status(200).send(contarTarefas.rows)
+        const contarTarefas= await tarefaRepository.getContarTarefa(Number(usuario));
+        return res.status(200).send(contarTarefas)
 
     } catch(err){
+        console.log(err)
         res.sendStatus(500)
     }
 };

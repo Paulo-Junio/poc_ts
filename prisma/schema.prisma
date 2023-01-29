@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model responsible {
+  id                                    Int      @id @default(autoincrement())
+  name                                  String
+  surname                               String
+  createdAt                             DateTime @default(now()) @db.Timestamp(6)
+  contact                               String
+  to_do_to_do_resposibleIdToresponsible to_do[]  @relation("to_do_resposibleIdToresponsible")
+}
+
+model status {
+  id                                Int      @id @default(autoincrement())
+  statusName                        String   @unique
+  createdAt                         DateTime @default(now()) @db.Timestamp(6)
+  to_do_to_do_statusIdToresponsible to_do[]  @relation("to_do_statusIdToresponsible")
+}
+
+model to_do {
+  id                                          Int         @id @default(autoincrement())
+  name                                        String
+  description                                 String
+  resposibleId                                Int
+  createAt                                    DateTime    @default(dbgenerated("'2023-01-29 15:57:28.443337'::timestamp without time zone")) @db.Timestamp(6)
+  statusId                                    Int
+  responsible_to_do_resposibleIdToresponsible responsible @relation("to_do_resposibleIdToresponsible", fields: [resposibleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  responsible_to_do_statusIdToresponsible     status      @relation("to_do_statusIdToresponsible", fields: [statusId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
