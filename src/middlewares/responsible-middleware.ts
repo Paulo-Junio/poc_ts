@@ -19,6 +19,13 @@ export const responsiblePostValidation = (req: Request, res: Response, next: Nex
 export const responsibleUpdateValidation = async (req: Request, res: Response, next:NextFunction) => {
     try{
         const id = Number(req.params.id);
+        const responsible  = req.body as responsibleInput;
+
+        const {error} =  responsibleSchema.validate(responsible,{abortEarly: false});
+
+        if (error) {
+            return res.status(400).send(error.message);
+        }
         const responsibleExist = await prisma.responsible.findFirst({
             where: {id}
         });

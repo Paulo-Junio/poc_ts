@@ -1,6 +1,6 @@
-import {QueryResult } from 'pg';
 import prisma from "../database/db.js";
-import { to_do } from '@prisma/client';
+import { to_do} from '@prisma/client';
+
 
 type ListaTarefa= {
     id: number,
@@ -19,7 +19,7 @@ const getTarefas = async () => {
             id: true,
             name: true,
             description:true,
-        responsible_to_do_resposibleIdToresponsible :{
+        responsible_to_do_resposibleIdToresponsible:{
                 select:{
                     name:true
                 }

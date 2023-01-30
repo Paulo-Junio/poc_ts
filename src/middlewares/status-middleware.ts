@@ -20,6 +20,13 @@ export const statusPostValidation = (req: Request, res: Response, next: NextFunc
 export const statusUpdateValidation = async (req: Request, res: Response, next:NextFunction) => {
     try{
         const id = Number(req.params.id);
+        const status  = req.body as StatusInput;
+        const {error} =  statusSchema.validate(status,{abortEarly: false});
+        if (error) {
+        
+            return res.status(400).send(error.message);
+        }
+
         const statusExist = await prisma.status.findFirst({
             where: {id}
         });
