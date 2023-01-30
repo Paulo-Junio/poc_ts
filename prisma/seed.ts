@@ -4,14 +4,14 @@ async function main() {
   await prisma.responsible.create({
     data: {
         name: "Jorge",
-        surname:"Seu jorge",
-        contact:"37986321456"
+        surname:"Jorginho",
+        contact:"37986321978"
     }
   });
 
   await prisma.status.create({
     data: {
-        statusName:"in-progress"
+        statusName:"canceled"
     }
   })
 
@@ -21,7 +21,6 @@ async function main() {
         description: "limpar o cocô do cachorro",
         resposibleId:1,
         statusId: 2
-
     }
   })
 }

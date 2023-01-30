@@ -50,9 +50,9 @@ export const responsibleDeleteValidation = async (req: Request, res: Response, n
             return res.status(404).send("O usuário não existe")
         }
 
-        const resposibleId = id;
+        const responsibleId = id;
         const toDoExist = await prisma.to_do.findFirst({
-            where:{resposibleId}
+            where:{responsibleId}
         })
         if(toDoExist){
             return res.status(400).send("Esse usuário possui tarefas atreladas a ele.")

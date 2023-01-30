@@ -42,15 +42,16 @@ export const tarefaUpdateDeleteValidation = async (req: Request, res: Response, 
 
 export const usuarioValidation = async (req: Request, res: Response, next:NextFunction) => {
     try{
-        const id = Number(req.params.id);
-        const usuarioExist = await prisma.responsible.findUnique({
-            where: {id}
-        });
+        const id = Number(req.params.usuario);
+        const usuarioExist = await prisma.responsible.findFirst({
+            where:{id}
+        })
         if(!usuarioExist){
             return res.status(400).send("O usuário não existe")
         }
         next()
     } catch(err){
+        console.log(err)
         res.sendStatus(500) 
     }
 };

@@ -19,12 +19,12 @@ const getTarefas = async () => {
             id: true,
             name: true,
             description:true,
-        responsible_to_do_resposibleIdToresponsible:{
+        responsible:{
                 select:{
                     name:true
                 }
             },
-        responsible_to_do_statusIdToresponsible: {
+        status: {
             select: {
                 statusName:true
             }
@@ -52,19 +52,19 @@ const deleteTarefas = async (id : number):Promise<void>  => {
     await prisma.to_do.delete({where: {id}});
 }
 
-const getContarTarefa= async(resposibleId:number) => {
+const getContarTarefa= async(responsibleId:number) => {
     const responsibleList = prisma.to_do.findMany({
-        where:{resposibleId},
+        where:{responsibleId},
         select: {
             id: true,
             name: true,
             description:true,
-        responsible_to_do_resposibleIdToresponsible :{
+        responsible:{
                 select:{
                     name:true
                 }
             },
-        responsible_to_do_statusIdToresponsible: {
+        status: {
             select: {
                 statusName:true
             }
