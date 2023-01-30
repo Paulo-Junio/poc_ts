@@ -161,7 +161,7 @@ Body esperado:
     contact: "telefone do usuário (string) no formato DDDXXXXXXXXX",
 }
 ```
-Em caso de sucesso, status code 200
+Em caso de sucesso, status code 200<br>
 Em caso de envio de um body inválido, retornará o status 400 - bad request
 <br><br>
 <h3>Buscar todos os responsáveis</h3> 
@@ -198,8 +198,8 @@ Body esperado :
         contact: "telefone do usuário (string) no formato DDDXXXXXXXXX",
     }
 ```
-Em caso de sucesso, status code 200
-Em caso de envio de  id inválido, retornará o status 404 e a mensagem "O usuário não existe."
+Em caso de sucesso, status code 200<br>
+Em caso de envio de  id inválido, retornará o status 404 e a mensagem "O usuário não existe."<br>
 Em caso de envio de  body inválido, retornará o status 400 e a mensagem do erro.
 <br><br>
 <h3>Deletar um responsável</h3> 
@@ -208,8 +208,8 @@ Em caso de envio de  body inválido, retornará o status 400 e a mensagem do err
 <br><br>
 Paramêtro de rota: id - corresponde ao id do resposável que será deleteado
 <br><br>
-Em caso de sucesso, status code 200
-Em caso de envio de  id inválido, retornará o status 404 e a mensagem "O usuário não existe."
+Em caso de sucesso, status code 200<br>
+Em caso de envio de  id inválido, retornará o status 404 e a mensagem "O usuário não existe."<br>
 Em caso de o sresponsável estar atrelado a uma tarefa, retornará o status 400 e a mensagem "Esse usuário possui tarefas atreladas a ele."
 <br><br>
 
@@ -257,8 +257,8 @@ Body esperado :
         statusName: "nome do responsável"
     }
 ```
-Em caso de sucesso, status code 200
-Em caso de envio de  id inválido, retornará o status 404 e a mensagem "O status não existe."
+Em caso de sucesso, status code 200<br>
+Em caso de envio de  id inválido, retornará o status 404 e a mensagem "O status não existe."<br>
 Em caso de envio de  body inválido, retornará o status 400 e a mensagem do erro.
 <br><br>
 <h3>Deletar um status</h3> 
@@ -267,7 +267,7 @@ Em caso de envio de  body inválido, retornará o status 400 e a mensagem do err
 <br><br>
 Paramêtro de rota: id - corresponde ao id do status que será deleteado
 <br><br>
-Em caso de sucesso, status code 200
-Em caso de envio de  id inválido, retornará o status 404 e a mensagem "O status não existe."
+Em caso de sucesso, status code 200<br>
+Em caso de envio de  id inválido, retornará o status 404 e a mensagem "O status não existe."<br>
 Em caso de o status estar atrelado a uma tarefa, retornará o status 400 e a mensagem "Esse status possui tarefas atreladas a ele."
 <br><br>
