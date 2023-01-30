@@ -210,7 +210,7 @@ Paramêtro de rota: id - corresponde ao id do resposável que será deleteado
 <br><br>
 Em caso de sucesso, status code 200<br>
 Em caso de envio de  id inválido, retornará o status 404 e a mensagem "O usuário não existe."<br>
-Em caso de o sresponsável estar atrelado a uma tarefa, retornará o status 400 e a mensagem "Esse usuário possui tarefas atreladas a ele."
+Em caso de o responsável estar atrelado a uma tarefa, retornará o status 400 e a mensagem "Esse usuário possui tarefas atreladas a ele."
 <br><br>
 
 <h3>Criar um status</h3> 
